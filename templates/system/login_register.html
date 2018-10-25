@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+{# 导入静态资源 #}
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>登录</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    {# 导入文件       #}
+    <link href="{% static 'assets/css/icons.css' %}" rel="stylesheet"/>
+    <link href="{% static  'assets/css/bootstrap.css' %}" rel="stylesheet"/>
+    <link href="{% static 'assets/css/main.css' %}" rel="stylesheet"/>
+
+</head>
+<body class="login-page">
+{# csrf保护 #}
+{% csrf_token %}
+<!-- Start #login -->
+<div id="login" class="animated bounceIn">
+    <div class="login-wrapper">
+        <ul id="myTab" class="nav nav-tabs nav-justified bn">
+            <li>
+                <a data-toggle="tab" id="log_a" style="cursor: pointer">登录</a>
+
+            </li>
+            <li class="">
+                <a data-toggle="tab" id="reg_a" style="cursor: pointer">注册</a>
+            </li>
+        </ul>
+        <div id="myTabContent" class="tab-content bn">
+            <div class="tab-pane fade active in" id="log_b">
+                <form class="form-horizontal mt10" action="#" id="login-form" role="form">
+                    <div class="form-group">
+                        <div class="col-lg-12">
+                            <input type="text" name="email" id="email" class="form-control left-icon"
+                                   placeholder="请输入你的邮箱账号">
+                            <i class="ec-user s16 left-input-icon"></i>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-12">
+                            <input type="password" name="password" id="password" class="form-control left-icon"
+                                   placeholder="请输入密码">
+                            <i class="ec-locked s16 left-input-icon"></i>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-8">
+                            <!-- col-lg-12 start here -->
+                            <label class="checkbox">
+                                <input type="checkbox" name="remember" id="remember" value="option">记住密码 ?
+                            </label>
+                        </div>
+                        <!-- col-lg-12 end here -->
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-4">
+                            <!-- col-lg-12 start here -->
+                            <button class="btn btn-success pull-right" type="submit">登录</button>
+                        </div>
+                        <!-- col-lg-12 end here -->
+                    </div>
+                </form>
+            </div>
+            <div class="tab-pane fade active in" id="reg_b" style="display: none">
+                <form class="form-horizontal mt20" action="#" id="register-form" role="form">
+                    <div class="form-group">
+                        <b><span id="reg_span"></span></b>
+                        <div class="col-lg-12">
+                            <input id="reg_name" type="text" name="email" class="form-control left-icon"
+                                   placeholder="请输入注册的用户名">
+                            <i class="ec-user s16 left-input-icon"></i>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <b><span id="email_span"></span></b>
+                        <div class="col-lg-12">
+                            <!-- col-lg-12 start here -->
+                            <input id="reg_email" name="email" type="email" class="form-control left-icon"
+                                   placeholder="请输入注册的邮箱">
+                            <i class="ec-mail s16 left-input-icon"></i>
+                        </div>
+                        <!-- col-lg-12 end here -->
+                    </div>
+                    <div class="form-group">
+                        <b><span id="pwd_span"></span></b>
+                        <div class="col-lg-12">
+                            <!-- col-lg-12 start here -->
+                            <input type="password" class="form-control left-icon" id="reg_pwd1" name="password"
+                                   placeholder="请输入密码">
+                            <i class="ec-locked s16 left-input-icon"></i>
+                        </div>
+                        <!-- col-lg-12 end here -->
+                        <div class="col-lg-12 mt15">
+                            <!-- col-lg-12 start here -->
+                            <input type="password" class="form-control left-icon" id="reg_pwd2"
+                                   name="confirm_passowrd" placeholder="请再次确认密码">
+                            <i class="ec-locked s16 left-input-icon"></i>
+                        </div>
+                        <!-- col-lg-12 end here -->
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-12">
+                            <!-- col-lg-12 start here -->
+                            <input type="button" class="btn btn-success btn-block" id="reg_btn" value="注册"></input>
+                        </div>
+                        <!-- col-lg-12 end here -->
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- End #.login-wrapper -->
+</div>
+<!-- 导入Jquery文件-->
+<script type="text/javascript" src="{% static 'jquery-easyui-1.3.3/jquery.min.js' %}"></script>
+<!--导入Jquery.cookie文件-->
+<script type="text/javascript" src="{% static 'jquery-easyui-1.3.3/jquery.cookie.js' %}"></script>
+<script type="text/javascript">
+    // 设置页面切换
+    //首页是注册页面
+    $('#reg_a').on('click', function () {
+        $('#log_b').hide();
+        $('#reg_b').show();
+    });
+    //点击登录页面 切换到注册页面
+    $('#log_a').on('click', function () {
+        $('#reg_b').hide();
+        $('#log_b').show();
+    });
+    function check_username() {
+        // 失焦事件
+        // 获取用户输入的用户名
+        var username = $('#reg_name').val();
+        var flag = false;
+        // 非空判断
+        if (undefined == username || '' == username) {
+            $('#reg_span').html('用户名不能为空');
+            return flag;
+        }
+
+        // 验证用户名 字母或者字母加数字必须字母开头 最少4位 最多16位
+        var reg = /^[a-zA-Z][a-zA-Z0-9]{4,16}$/
+
+        if (!reg.test(username)) {
+            $('#reg_span').html('用户名必须是字母开头，4~16位!');
+            return flag;
+        }
+
+        // 合法后清空提示
+        $('#reg_span').html('');
+
+
+        // 用户名验证成功后发送ajax请求
+        $.ajax({
+            'type': 'POST',
+            'url':'{% url 'system:unqiue_username' %}',
+            'async': false,
+            'data': {
+                'csrfmiddlewaretoken': $.cookie('csrftoken'),
+                'username': username
+            },
+            'dataType': 'json',
+            'success': function (result) {
+                // 如果是400,返回false
+                if (400 == result.code) {
+                    flag = false;
+                    $('#reg_span').html(result.msg);
+                }
+                // 如果是200 正常显示
+                if (200 == result.code) {
+                    flag = true;
+                    $('#reg_span').html(result.msg);
+                }
+            },
+            'error': function (result) {
+                console.log(result);
+            }
+        });
+        return flag;
+    }
+    $('#reg_name').on('blur', check_username);
+    // 验证邮箱格式收否正确
+    function check_email() {
+        // 获取邮箱账号
+        var email = $('#reg_email').val();
+        var flag = false;
+
+        // 非空判断
+        if (undefined == email || '' == email) {
+            $('#email_span').html('邮箱不能为空');
+            return flag;
+        }
+        // 判断邮箱格式是否正确
+        var reg = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/;
+        if (!reg.test(email)) {
+            $('#email_span').html('请输入正确的邮箱格式');
+            return flag;
+        }
+        // 邮箱格式正确,清空提示信息
+        $('#email_span').html('');
+        // 邮箱格式正确发送ajax请求
+        $.ajax({
+            'type': 'POST',
+            'url': '{% url 'system:unique_email' %}',
+            'async': false,
+            'data': {
+                'csrfmiddlewaretoken': $.cookie('csrftoken'),
+                'email': email
+            },
+            'dataType': 'json',
+            'success': function (result) {
+                // 如果返回是400,设置false返回
+                if (400 == result.code) {
+                    flag = false;
+                    $('#email_span').html(result.msg);
+
+                }
+
+                // 如果返回是200,正常显示
+                if (200 == result.code) {
+                    flag = true;
+                    $('#email_span').html(result.msg);
+                }
+            },
+            'error': function (result) {
+                console.log(result);
+
+            }
+        });
+        return flag;
+    }
+    $('#reg_email').on('blur', check_email);
+    // 验证密码,必须是数字大小写字母特殊符号组成,最少8位,最多16位
+    function check_pwd() {
+        // 获取密码
+        var pwd = $('#reg_pwd1').val();
+        // 判断密码长度是否是8~16位
+        if (pwd.length > 16 || pwd.length < 8) {
+            $('#pwd_span').html('密码在8~16位!');
+            return false;
+        }
+        // 验证密码
+        var reg = /^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?\d)(?=.*?[#@*&.])[a-zA-Z\d#@*&.]{8,16}$/;
+
+        if (!reg.test(pwd)) {
+            $('#pwd_span').html('请输入正确的密码');
+            return false;
+        }
+        // 密码合法后清空提示
+        $('#pwd_span').html("");
+        return true
+    }
+    $('#reg_pwd1').on('blur', check_pwd);
+    // 重复密码 获取密码的值进行比较
+    function check_pwd2() {
+        // 获取第一次的密码
+        var pwd1 = $('#reg_pwd1').val().trim();
+        // 获取第二次输入的密码
+        var pwd2 = $('#reg_pwd2').val().trim();
+        // 非空判断
+        if (undefined == pwd2 || '' == pwd2) {
+            $('#pwd_span').html('没有输入重复密码,请重新输入!');
+            return false;
+        }
+
+        //比较两次输入的密码
+        if (pwd1 != pwd2) {
+            $('#pwd_span').html('两次输入的密码不一致,请重新输入!');
+            return false;
+        }
+        //密码相同时,清空提示
+        $('#pwd_span').html("");
+        return true;
+    }
+    $('#reg_pwd2').on('blur', check_pwd2);
+
+
+    // 点击注册按钮,再次验证数据是否合格
+    $('#reg_btn').on('click',function () {
+        // 点击注册按钮以后,按钮置灰
+        $('#reg_btn').attr('disabled','true');
+        var flag=check_username();
+        if(!flag){
+            return;
+        }
+        var flag=check_email();
+        if(!flag){
+            return;
+        }
+        var flag=check_pwd();
+        if(!flag){
+            return;
+        }
+        var flag=check_pwd2();
+        if(!flag){
+            return;
+        }
+
+
+        // 用户信息合法,发送邮件激活账号
+        // 获取用户名
+        var username=$('#reg_name').val().trim();
+        //获取邮箱
+        var email=$('#reg_email').val().trim();
+        //获取密码
+        var pwd=$('#reg_pwd1').val().trim();
+        $.ajax({
+            'type': 'POST',
+            'url': '{% url 'system:send_email' %}',
+            'async': false,
+            'data': {
+                'csrfmiddlewaretoken': $.cookie('csrftoken'),
+                'email': email,
+                'username': username,
+                'password': pwd
+            },
+            'dataType': 'json',
+            'success': function (result) {
+                // 如果是400 设置为false返回
+                if (400 == result.code) {
+                    $('#reg_span').html(result.msg);
+                }
+
+                // 如果是200 正常显示
+                if (200 == result.code) {
+                    $('#reg_span').html(result.msg);
+                }
+            },
+            'error': function (result) {
+                console.log(result);
+            }
+        });
+    });
+</script>
+</body>
+</html>

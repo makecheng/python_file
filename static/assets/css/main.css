@@ -3531,3 +3531,16 @@ pre {
   padding-left: 20px;
   padding-bottom: 10px;
 }
+#email_span {
+  color: red;
+  display: block;
+  padding-left: 20px;
+  padding-bottom: 10px;
+}
+#pwd_span {
+  color: red;
+  display: block;
+  padding-left: 20px;
+  padding-bottom: 10px;
+}
+
