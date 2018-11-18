@@ -3525,41 +3525,7 @@ pre {
 /**
  * 添加注册提示信息样式
  */
-#reg_span {
-  color: red;
-  display: block;
-  padding-left: 20px;
-  padding-bottom: 10px;
-}
-#email_span {
-  color: red;
-  display: block;
-  padding-left: 20px;
-  padding-bottom: 10px;
-}
-#pwd_span {
-  color: red;
-  display: block;
-  padding-left: 20px;
-  padding-bottom: 10px;
-}
-#login_span {
-  color: red;
-  display: block;
-  padding-left: 20px;
-  padding-bottom: 10px;
-}
-#remember_5{
-  padding-left: 20px;
-
-}
-#forget_span {
-  color: red;
-  display: block;
-  padding-left: 20px;
-  padding-bottom: 10px;
-}
-#pwd_span {
+#reg_span, #login_span {
   color: red;
   display: block;
   padding-left: 20px;

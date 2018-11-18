@@ -18,7 +18,7 @@ class User(models.Model):
     # 创建时间
     create_date=models.DateField(default=datetime.now())
     # 修改时间
-    update_date=models.DateField(null=True)
+    update_date=models.DateField(null=True, default=datetime.now() )
     # 激活码  varchar=255
     code =models.CharField(max_length=255,null=True)
     # 状态  varchar=1

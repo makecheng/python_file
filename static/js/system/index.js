@@ -48,7 +48,6 @@ function sub_system_index_updatepwd_form() {
         url: '/system/update_password/',
         success: function (result) {
             var obj = JSON.parse(result);
-            console.log(obj);
 
             // 显示提示信息
             $.messager.show({
@@ -87,4 +86,23 @@ function logout() {
             window.location.href = '/system/logout/';
         }
     });
+}
+
+// 打开一个新的tab页面
+function openTab(title, url, iconCls) {
+    // 选项面板是否存在，存在选中，不存在添加
+    var flag = $('#tabs').tabs('exists', title);
+
+    if (flag) {
+        $('#tabs').tabs('select', title);
+    } else {
+        $('#tabs').tabs('add', {
+            title: title,
+            iconCls: iconCls,
+            closable: true,  // 是否可以关闭
+            // href: '/sales/sale_chance_index/',  // 跳转请求打开对应的页面，样式会出问题
+            // 新增一个iframe窗口
+            content: "<iframe frameborder=0 scrolling='auto' style='width:99%;height:99%' src='" + url + "'></iframe>",
+        });
+    }
 }

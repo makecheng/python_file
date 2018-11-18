@@ -33,14 +33,14 @@
     <div class="easyui-accordion" data-options="fit:true,border:false">
 
         <div title="营销管理" data-options="selected:true,iconCls:'icon-yxgl'" style="padding: 10px">
-            <a href="javascript:openTab('营销机会管理','','icon-yxjhgl')" class="easyui-linkbutton"
+            <a href="javascript:openTab('营销机会管理','{% url 'sales:sales_chance_index' %}','icon-yxjhgl')" class="easyui-linkbutton"
                data-options="plain:true,iconCls:'icon-yxjhgl'" style="width: 150px">营销机会管理</a>
-            <a href="javascript:openTab('客户开发计划','','icon-khkfjh')" class="easyui-linkbutton"
+            <a href="javascript:openTab('客户开发计划','{% url 'sales:cus_dev_plan_index' %}','icon-khkfjh')" class="easyui-linkbutton"
                data-options="plain:true,iconCls:'icon-khkfjh'" style="width: 150px">客户开发计划</a>
         </div>
 
         <div title="客户管理" data-options="iconCls:'icon-khgl'" style="padding:10px;">
-            <a href="javascript:openTab('客户信息管理','','icon-khxxgl')" class="easyui-linkbutton"
+            <a href="javascript:openTab('客户信息管理','{% url 'customer:customer_index' %}','icon-khxxgl')" class="easyui-linkbutton"
                data-options="plain:true,iconCls:'icon-khxxgl'" style="width: 150px;">客户信息管理</a>
             <a href="javascript:openTab('客户流失管理','','icon-khlsgl')" class="easyui-linkbutton"
                data-options="plain:true,iconCls:'icon-khlsgl'" style="width: 150px;">客户流失管理</a>

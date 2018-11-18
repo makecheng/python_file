@@ -436,10 +436,9 @@ def forget_active_accounts(request):
 
         # 修改密码
         user.password = new_password_md5
-
+        user.timestamp = ''
         user.save()
-        # user.password=pwd ,
-        # user.save()
+
 
         # 返回页面提示信息
         return JsonResponse({'code': 200, 'msg': '密码修改成功'})

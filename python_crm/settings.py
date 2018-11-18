@@ -29,6 +29,9 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
+    'base',
+    'customer',
+    'sales',
     'system',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -82,7 +85,7 @@ DATABASES = {
         # 'ENGINE': 'django.db.backends.sqlite3',
         # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         'ENGINE': 'django.db.backends.mysql',  # 数据库连接方式
-        'NAME': 'crm',  # 数据库名
+        'NAME': 'pycharm_crm',  # 数据库名
         'USER': 'root',  # 数据库连接用户名
         'PASSWORD': '1234',  # 数据库密码
         'HOST': '127.0.0.1',  # 数据库连接 ip

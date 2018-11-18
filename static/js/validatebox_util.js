@@ -1,7 +1,7 @@
-/*
-    validatebox
-       value代表当前输入框自己的值
-       param代表验证接收到的值
+/**
+ * 扩展validatebox
+ *      value代表当前输入框自己的值
+ *      param代表验证接收到的值
  */
 $.extend($.fn.validatebox.defaults.rules, {
     // 验证密码长度 8~16位
